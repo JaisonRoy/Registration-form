@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "formdata": {
+        "username": "sam",
+        "email": "sam@mail.com"
+      },
+      "password": "sam@12345",
+      "id": 1
+    },
+    {
+      "formdata": {
+        "username": "john",
+        "email": "john@mail.com"
+      },
+      "password": "john@12345",
+      "id": 2
+    },
+    {
+      "formdata": {
+        "username": "emma",
+        "email": "emma@mail.com"
+      },
+      "password": "emma@12345",
+      "id": 3
+    }
+  ]
+}

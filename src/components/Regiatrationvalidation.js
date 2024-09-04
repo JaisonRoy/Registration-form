@@ -10,11 +10,11 @@ function validation(formdata) {
   } else if (!regex.test(formdata.email)) {
     errors.email = "Email is invalid";
   }
-  //   if (!formdata.password) {
-  //     errors.password = "Password is required";
-  //   } else if (formdata.password.length < 7) {
-  //     errors.password = "Password is too short";
-  //   }
+  // if (!formdata.password) {
+  //   errors.password = "Password is required";
+  // } else if (formdata.password.length < 7) {
+  //   errors.password = "Password is too short";
+  // }
 
   return errors;
 }

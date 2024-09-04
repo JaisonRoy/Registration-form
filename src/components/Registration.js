@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import validation from "./Regiatrationvalidation";
-import "./Regform.css";
+import "./Styles/Regform.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
   const [formdata, setFormdata] = useState({
@@ -14,6 +16,7 @@ function Registration() {
   const [password, setPassword] = useState("");
   const [strength, setStrength] = useState("");
   const [strengthColor, setStrengthColor] = useState("");
+  const navigate = useNavigate();
 
   function PasswordStrength(password) {
     let score = 0;
@@ -62,10 +65,7 @@ function Registration() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormdata({
-      ...formdata,
-      [name]: value,
-    });
+    setFormdata({ ...formdata, [name]: value });
     // console.log(formdata);
   };
   const handlePassword = (e) => {
@@ -76,7 +76,7 @@ function Registration() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    // console.log(formdata);
     setFormError(validation(formdata));
     setIsSubmit(true);
   };
@@ -88,24 +88,40 @@ function Registration() {
       isSubmit &&
       strength === "Strong password"
     ) {
-      alert("form submitted successfully");
+      axios
+        .post("http://localhost:4000/users", { formdata, password })
+        .then((result) => {
+          alert("form submitted successfully");
+          navigate("/login");
+        })
+        .catch((err) => console.log(err));
     }
-  }, [formError]);
+  });
 
   return (
     <div className="form">
       <form onSubmit={handleSubmit}>
-        <h1>Registration Form</h1>
+        <h1 className="reghead">Registration Form</h1>
         <label>Username</label>
-        <input type="text" name="username" onChange={handleChange} />
+        <input
+          className="reginput"
+          type="text"
+          name="username"
+          onChange={handleChange}
+        />
         <p>{formError.username}</p>
 
         <label>Email</label>
-        <input name="email" onChange={handleChange} />
+        <input className="reginput" name="email" onChange={handleChange} />
         <p>{formError.email}</p>
 
         <label>Password</label>
-        <input type="password" name="password" onChange={handlePassword} />
+        <input
+          className="reginput"
+          type="password"
+          name="password"
+          onChange={handlePassword}
+        />
         <br />
         <small>
           <span
@@ -117,9 +133,14 @@ function Registration() {
             {strength}
           </span>
         </small>
-        <p>{formError.password}</p>
+        {/* <p>{formError.password}</p> */}
+        <br></br>
         <br />
         <button className="btn">Submit</button>
+        <br></br>
+        <span>
+          have an account?<a href="/login">Login</a>
+        </span>
       </form>
     </div>
   );
